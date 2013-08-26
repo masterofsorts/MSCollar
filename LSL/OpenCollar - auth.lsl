@@ -1,4 +1,4 @@
-//OpenCollar - auth
+﻿//OpenCollar - auth
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 
 key g_kWearer;
@@ -43,7 +43,6 @@ integer COMMAND_SAFEWORD = 510;  // new for safeword
 integer COMMAND_BLACKLIST = 520;
 // added so when the sub is locked out they can use postions
 integer COMMAND_WEARERLOCKEDOUT = 521;
-
 
 integer POPUP_HELP = 1001;
 
@@ -138,26 +137,19 @@ Notify(key kID, string sMsg, integer iAlsoNotifyWearer)
     }
 }
 
-SayOwners()
-{
+SayOwners() {
     // Give a "you are owned by" message, nicely formatted.
     list ownernames = llList2ListStrided(llDeleteSubList(g_lOwners, 0, 0), 0, -1, 2);
     integer ownercount = llGetListLength(ownernames);
-    if (ownercount)
-	{
+    if (ownercount) {
         string msg = "You are owned by ";
-        if (ownercount == 1)
-		{
+        if (ownercount == 1) {
             // if one person, then just name.
             msg += (string)ownernames;
-        }
-		else if (ownercount == 2)
-		{
+        } else if (ownercount == 2) {
             // if two people, then A and B.
             msg += llDumpList2String(ownernames, " and ");
-        }
-		else
-		{
+        } else {
             // if >2 people, then A, B, and C
             list init = llDeleteSubList(ownernames, -1, -1);
             list tail = llDeleteSubList(ownernames, 0, -2);
@@ -192,11 +184,11 @@ list AddUniquePerson(list lContainer, key kID, string sName, string sType)
         Notify(g_kWearer, "Added " + sName + " to " + sType + ".", FALSE);
         if (sType == "owner")
         {
-            Notify(g_kWearer, "Your owner can have a lot  power over you and you consent to that by making them your owner on your " + CTYPE + ". They can leash you, put you in poses, lock your collar, see your location and what you say in local chat.  If you are using RLV they can  undress you, make you wear clothes, restrict your chat, IMs and TPs as well as force TP you anywhere they like. Please read the help for more info. If you do not consent, you can use the command \"" + g_sPrefix + "runaway\" to remove all owners from the collar.", FALSE);
+            Notify(g_kWearer, "Your owner can have a lot  power over you and you consent to that by making them your owner on your " + CTYPE + ". They can leash you, put you in poses, lock your " + CTYPE + ", see your location and what you say in local chat.  If you are using RLV they can  undress you, make you wear clothes, restrict your  chat, IMs and TPs as well as force TP you anywhere they like. Please read the help for more info. If you do not consent, you can use the command \"" + g_sPrefix + "runaway\" to remove all owners from the " + CTYPE + ".", FALSE);
         }
     }
 
-    if (sType == "owner" || sType == "secowner") Notify(kID, "You have been added to the " + sType + " list on " + llKey2Name(g_kWearer) + "'s " + CTYPE + ".\nFor help concerning the collar usage either say \"" + g_sPrefix + "help\" in chat or go to " + g_sWikiURL + " .",FALSE);
+    if (sType == "owner" || sType == "secowner") Notify(kID, "You have been added to the " + sType + " list on " + llKey2Name(g_kWearer) + "'s " + CTYPE + ".\nFor help concerning the " + CTYPE + " usage either say \"" + g_sPrefix + "help\" in chat or go to " + g_sWikiURL + " .",FALSE);
     return lContainer;
 }
 
@@ -226,6 +218,7 @@ NewPerson(key kID, string sName, string sType)
 
 key Dialog(key kRCPT, string sPrompt, list lChoices, list lUtilityButtons, integer iPage, integer iAuth)
 {
+
     key kID = llGenerateKey();
     llMessageLinked(LINK_SET, DIALOG, (string)kRCPT + "|" + sPrompt + "|" + (string)iPage + "|" 
     + llDumpList2String(lChoices, "`") + "|" + llDumpList2String(lUtilityButtons, "`") + "|" + (string)iAuth, kID);
@@ -408,10 +401,14 @@ list RemovePerson(list lPeople, string sName, string sToken, key kCmdr)
             if (kRemovedPerson!=g_kWearer)
                 // if it isnt the wearer, we are nice and notify them
             {
-				string out = "You have been removed as ";
-				if (g_sToken == g_sSecOwnersToken) out += "sec";
-				out += owner on the " + CTYPE + " of " + llKey2Name(g_kWearer) + "."
-                Notify(kRemovedPerson, out,FALSE);
+                if (sToken == g_sOwnersToken)
+                {
+                    Notify(kRemovedPerson,"You have been removed as owner on the " + CTYPE + " of " + llKey2Name(g_kWearer) + ".",FALSE);
+                }
+                else
+                {
+                    Notify(kRemovedPerson,"You have been removed as secowner on the " + CTYPE + " of " + llKey2Name(g_kWearer) + ".",FALSE);
+                }
             }
             //whisper to attachments about owner and secowner changes
         sendToAttachmentInterface("OwnerChange");
@@ -803,7 +800,7 @@ default
     state_entry()
     {   //until set otherwise, wearer is owner
         Debug((string)llGetFreeMemory());
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_kWearer = llGetOwner();
         SetPrefix("auto");
         //added for attachment auth
@@ -919,7 +916,7 @@ default
                 }
             }
             else if (sToken == "Global_prefix") SetPrefix(sValue);
-			else if (sToken == "Global_CType") CTYPE = sValue;
+            else if (sToken == "Global_CType") CTYPE = sValue;
         }
         else if (iNum == LM_SETTING_SAVE)
         {
@@ -943,17 +940,9 @@ default
                 key kOwner = (key)llList2String(g_lOwners, n);
                 Notify(kOwner, "Your sub " + sSubName + " has used the safeword. Please check on " + sSubFirstName +"'s well-being and if further care is required.",FALSE);
             }
-			llMessageLinked(LINK_THIS, INTERFACE_RESPONSE, "safeword", NULL_KEY);
+            llMessageLinked(LINK_THIS, INTERFACE_RESPONSE, "safeword", NULL_KEY);
         }
-		// JS: For backwards compatibility until all attachments/etc are rolled over to new interface
-        //added for attachment auth (Garvin)
-        else if (iNum == ATTACHMENT_REQUEST)
-        {
-            integer iAuth = Auth((string)kID, TRUE);
-            llMessageLinked(LINK_SET, ATTACHMENT_RESPONSE, (string)iAuth, kID);
-        }
-		// JS: Remove ATTACHMENT_REQUEST & RESPONSE after all attachments have been updated properly
-		else if (iNum == INTERFACE_REQUEST)
+        else if (iNum == INTERFACE_REQUEST)
         {
             list lParams = llParseString2List(sStr, ["|"], []);
             string sTarget = llList2String(lParams, 0);
@@ -1038,6 +1027,7 @@ default
                     {
                         if (OwnerCheck(kAv))
                         {
+
                             RemPersonMenu(kAv, g_lOwners, "remowners", iAuth);
                             return;
                         }
@@ -1128,8 +1118,9 @@ default
                     AuthMenu(kAv, iAuth);
                 }
             }
-		}
-		else if(iNum == FIND_AGENT)
+
+        }
+        else if(iNum == FIND_AGENT)
         {
             if (kID != REQUEST_KEY) return;
             list params = llParseString2List(sStr, ["|"], []);
@@ -1151,7 +1142,7 @@ default
                 g_kAuthMenuID = Dialog(new, prompt, ["Yes", "No"], [], 0, iNum);
                 return;
             }
-			NewPerson(new, llKey2Name(new), g_sRequestType);
+            NewPerson(new, llKey2Name(new), g_sRequestType);
         }
     }
 
