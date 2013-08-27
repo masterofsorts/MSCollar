@@ -1,4 +1,4 @@
-//OpenCollar - appearance
+﻿//OpenCollar - appearance
 //handle appearance menu
 //handle saving position on detach, and restoring it on httpdb_response
 
@@ -159,7 +159,6 @@ Store_StartScaleLoop()
     g_lPrimStartSizes = [];
     integer iPrimIndex;
     vector vPrimScale;
-    vector vPrimPosit;
     list lPrimParams;
     if (llGetNumberOfPrims()<2) 
     {
@@ -171,9 +170,7 @@ Store_StartScaleLoop()
         for (iPrimIndex = 1; iPrimIndex <= llGetNumberOfPrims(); iPrimIndex++ )
         {
             lPrimParams = llGetLinkPrimitiveParams( iPrimIndex, [PRIM_SIZE, PRIM_POSITION]);
-            vPrimScale=llList2Vector(lPrimParams,0);
-            vPrimPosit=(llList2Vector(lPrimParams,1)-llGetRootPosition())/llGetRootRotation();
-            g_lPrimStartSizes += [vPrimScale,vPrimPosit];
+            g_lPrimStartSizes += lPrimParams;
         }
     }
     g_iScaleFactor = 100;
@@ -233,14 +230,14 @@ ScalePrimLoop(integer iScale, integer iRezSize, key kAV)
         {
 //            lPrimParams = llGetLinkPrimitiveParams(iPrimIndex, [PRIM_SIZE, PRIM_POSITION]);
             vPrimScale = fScale * llList2Vector(g_lPrimStartSizes, (iPrimIndex - 1)*2);
-            vPrimPos = fScale * llList2Vector(g_lPrimStartSizes, (iPrimIndex - 1)*2+1);
+            vPrimPos = fScale * (llList2Vector(g_lPrimStartSizes, (iPrimIndex - 1)*2+1) - llGetPos());
             if (iPrimIndex == 1) 
             {
                 llSetLinkPrimitiveParamsFast(iPrimIndex, [PRIM_SIZE, vPrimScale]);
             }
             else 
             {
-                llSetLinkPrimitiveParamsFast(iPrimIndex, [PRIM_SIZE, vPrimScale, PRIM_POSITION, vPrimPos]);
+                llSetLinkPrimitiveParamsFast(iPrimIndex, [PRIM_SIZE, vPrimScale, PRIM_POSITION, vPrimPos/llGetRootRotation()]);
             }
         }
         g_iScaleFactor = iScale;
@@ -294,7 +291,7 @@ RotMenu(key kAv, integer iAuth)
 
 PosMenu(key kAv, integer iAuth)
 {
-    string sPrompt = "Adjust the " + CTYPE + " position:\nChoose the size of the nudge (S/M/L), and move the collar in one of the three directions (X/Y/Z).\nCurrent nudge size is: ";
+    string sPrompt = "Adjust the " + CTYPE + " position:\nChoose the size of the nudge (S/M/L), and move the " + CTYPE + " in one of the three directions (X/Y/Z).\nCurrent nudge size is: ";
     list lMyButtons = ["left", "up", "forward", "right", "down", "backward"];// ria iChange
     if (g_fNudge!=g_fSmallNudge) lMyButtons+=["Nudge: S"];
     else sPrompt += "Small.";
@@ -318,7 +315,7 @@ PosMenu(key kAv, integer iAuth)
 
 SizeMenu(key kAv, integer iAuth)
 {
-    string sPrompt = "Adjust the " + CTYPE + " scale. It is based on the size the collar has on rezzing. You can change back to this size by using '100%'.\nCurrent size: " + (string)g_iScaleFactor + "%\n\nATTENTION! May break the design of collars. Make a copy of the collar before using!";
+    string sPrompt = "Adjust the " + CTYPE + " scale. It is based on the size the " + CTYPE + " has on rezzing. You can change back to this size by using '100%'.\nCurrent size: " + (string)g_iScaleFactor + "%\n\nATTENTION! May break the design of " + CTYPE + "s. Make a copy of the " + CTYPE + " before using!";
     key kMenuID = Dialog(kAv, sPrompt, SIZEMENU_BUTTONS, [UPMENU], 0, iAuth);
     integer iMenuIndex = llListFindList(g_lMenuIDs, [kAv]);
     list lAddMe = [kAv, kMenuID, SIZEMENU];
@@ -482,7 +479,7 @@ default
             list lParams = llParseString2List(sStr, ["="], []);
             string sToken = llList2String(lParams, 0);
             string sValue = llList2String(lParams, 1);
-			if (sToken == Global_CType) CTYPE = sValue;
+            if (sToken == "Global_CType") CTYPE = sValue;
             else if (sToken == g_sAppLockToken)
             {
                 g_iAppLock = (integer)sValue;
@@ -561,27 +558,27 @@ default
                     }
                     else if (llGetAttached())
                     {
-                        if (sMessage == "forward")
+                        if (sMessage == "left")
                         {
                             AdjustPos(<g_fNudge, 0, 0>);
                         }
-                        else if (sMessage == "left")
+                        else if (sMessage == "up")
                         {
                             AdjustPos(<0, g_fNudge, 0>);                
                         }
-                        else if (sMessage == "up")
+                        else if (sMessage == "forward")
                         {
                             AdjustPos(<0, 0, g_fNudge>);                
                         }            
-                        else if (sMessage == "backward")
+                        else if (sMessage == "right")
                         {
                             AdjustPos(<-g_fNudge, 0, 0>);                
                         }            
-                        else if (sMessage == "right")
+                        else if (sMessage == "down")
                         {
                             AdjustPos(<0, -g_fNudge, 0>);                    
                         }            
-                        else if (sMessage == "down")
+                        else if (sMessage == "backward")
                         {
                             AdjustPos(<0, 0, -g_fNudge>);                
                         }                            

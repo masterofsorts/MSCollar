@@ -1,5 +1,5 @@
 ﻿// Template for creating a OpenCollar Plugin
-// API Version: 3.8
+// API Version: 39
 
 // Licensed under the GPLv2, with the additional requirement that these scripts
 // remain "full perms" in Second Life.  See "OpenCollar License" for details.
@@ -15,7 +15,7 @@ integer IN_DEBUG_MODE               = FALSE;    // set to TRUE to enable Debug m
 key     g_kMenuID;                              // menu handler
 key     g_kWearer;                              // key of the current wearer to reset only on owner changes
 string  g_sScript;                              // part of script name used for settings
-string CTYPE 						= "collar";	// designer can set in notecard to appropriate word for their item		
+string CTYPE                         = "collar";    // designer can set in notecard to appropriate word for their item        
 
  // any local, not changing buttons which will be used in this plugin, leave empty or add buttons as you like:
 list    PLUGIN_BUTTONS              = ["Command 1", "Command 2", "AuthCommand"];

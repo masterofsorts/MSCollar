@@ -1,4 +1,4 @@
-//OpenCollar - camera
+﻿//OpenCollar - camera
 //allows dom to set different camera mode
 //responds to commands from modes list
 
@@ -188,7 +188,6 @@ string StrReplace(string sSrc, string sFrom, string sTo)
 }
 
 //These TightListType functions allow serializing a list to a string, and deserializing it back, while preserving variable type information.  We use them so we can have a list of camera modes, where each mode is itself a list
-
 integer TightListTypeLength(string sInput)
 {
     string sSeperators = llGetSubString(sInput,(0),6);
@@ -404,7 +403,7 @@ default
     
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         if (llGetAttached())
         {
             llRequestPermissions(llGetOwner(), PERMISSION_CONTROL_CAMERA | PERMISSION_TRACK_CAMERA);
@@ -439,7 +438,7 @@ default
             string sToken = llList2String(lParams, 0);
             string sValue = llList2String(lParams, 1);
             integer i = llSubStringIndex(sToken, "_");
-			if (llGetSubString(sToken, 0, i) == g_sScript)
+            if (llGetSubString(sToken, 0, i) == g_sScript)
             {
                 sToken = llGetSubString(sToken, i + 1, -1);
                 if (llGetPermissions() & PERMISSION_CONTROL_CAMERA)

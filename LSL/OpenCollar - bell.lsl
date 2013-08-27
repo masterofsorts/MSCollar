@@ -1,4 +1,4 @@
-//OpenCollar - bell
+﻿//OpenCollar - bell
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 //Collar Cuff Menu
 
@@ -113,7 +113,7 @@ key Dialog(key kRCPT, string sPrompt, list lChoices, list lUtilityButtons, integ
     llMessageLinked(LINK_SET, DIALOG, (string)kRCPT + "|" + sPrompt + "|" + (string)iPage + "|" 
     + llDumpList2String(lChoices, "`") + "|" + llDumpList2String(lUtilityButtons, "`") + "|" + (string)iAuth, kID);
     return kID;
-}
+} 
 
 string AutoPrefix()
 {
@@ -489,7 +489,7 @@ default
 {
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         // key of the owner
         g_kWearer=llGetOwner();
         g_sSubPrefix=AutoPrefix();
@@ -566,7 +566,7 @@ default
                 else if (sToken == "speed") g_fSpeed=(float)sValue/10;
             }
             else if (sToken == "Global_prefix") g_sSubPrefix=sValue;
-			else if (sToken == "Global_CType") CTYPE = sValue;
+            else if (sToken == "Global_CType") CTYPE = sValue;
         }
         else if (iNum == LM_SETTING_SAVE)
         {

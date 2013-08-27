@@ -1,4 +1,4 @@
-//OpenCollar - rlvex
+﻿//OpenCollar - rlvex
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life. See "OpenCollar License" for details.
 
 key g_kLMID;//store the request id here when we look up a LM
@@ -121,8 +121,8 @@ integer ANIM_STOP = 7001;//send this with the name of an anim in the string part
 integer DIALOG = -9000;
 integer DIALOG_RESPONSE = -9001;
 integer DIALOG_TIMEOUT = -9002;
-integer FIND_AGENT = -9005;
 
+integer FIND_AGENT = -9005;
 string UPMENU = "^";
 
 key REQUEST_KEY;
@@ -327,7 +327,7 @@ MakeNamesList()
 
 FetchAvi(integer auth, string type, string name, key user)
 {
-	if (name == "") name = " ");
+    if (name == "") name = " ";
     string out = llDumpList2String(["getavi_", g_sScript, user, auth, type, name], "|");
     integer i = 0;
     list src = g_lNames;
@@ -336,7 +336,8 @@ FetchAvi(integer auth, string type, string name, key user)
     {
         exclude += [llList2String(src, i)];
     }
-    if (llGetListLength(exclude)) out += "|" + llDumpList2String(exclude, ",");
+    if (llGetListLength(exclude))
+        out += "|" + llDumpList2String(exclude, ",");
     llMessageLinked(LINK_THIS, FIND_AGENT, out, REQUEST_KEY = llGenerateKey());
 }
 
@@ -679,7 +680,7 @@ default
 
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_kWearer = llGetOwner();
         g_kTmpKey = NULL_KEY;
         g_sTmpName = "";
@@ -704,7 +705,7 @@ default
             string sToken = llList2String(lParams, 0);
             string sValue = llList2String(lParams, 1);
             integer i = llSubStringIndex(sToken, "_");
-			if (llGetSubString(sToken, 0, i) == g_sScript)
+            if (llGetSubString(sToken, 0, i) == g_sScript)
             {
                 sToken = llGetSubString(sToken, i + 1, -1);
                 if (sToken == "owner") g_iOwnerDefault = (integer)sValue;
@@ -715,7 +716,7 @@ default
                     MakeNamesList();
                 }
             }
-			else if (sToken == "Global_CType") CTYPE = sValue;
+            else if (sToken == "Global_CType") CTYPE = sValue;
             else if (sToken == "auth_owner") g_lOwners = llParseString2List(sValue, [","], []);
             else if (sToken == "auth_secowner") g_lSecOwners = llParseString2List(sValue, [","], []);
             else if (sToken == "settings")
@@ -888,7 +889,7 @@ default
                 }
             }
         }
-		else if (iNum == FIND_AGENT)
+        else if (iNum == FIND_AGENT)
         {
             if (kID != REQUEST_KEY) return;
             list params = llParseString2List(sStr, ["|"], []);

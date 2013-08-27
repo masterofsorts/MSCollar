@@ -40,10 +40,10 @@ integer MENUNAME_RESPONSE = 3001;
 integer EXT_COMMAND_COLLAR = 499;
 
 // new g_sSafeWord
-string g_sSafeWord = "RED";
+string g_sSafeWord = "SAFEWORD";
 
 //added for attachment auth
-integer g_iInterfaceChannel = -12587429; // AO backwards compatibility
+integer g_iInterfaceChannel = -12587429; // AO
 integer g_iListenHandleAtt;
 
 integer ATTACHMENT_REQUEST = 600;
@@ -69,6 +69,7 @@ SetListeners()
     llListenRemove(g_iListener2);
     llListenRemove(g_iLockMesiterListener);
     llListenRemove(g_iListenHandleAtt);
+
     if(g_iListenChan0 == TRUE)
     {
         g_iListener1 = llListen(0, "", NULL_KEY, "");
@@ -135,7 +136,6 @@ integer GetOwnerChannel(key kOwner, integer iOffset)
     }
     return iChan;
 }
-
 Notify(key kID, string sMsg, integer iAlsoNotifyWearer)
 {
     if (kID == g_kWearer)
@@ -176,7 +176,7 @@ default
 {
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_kWearer = llGetOwner();
         SetPrefix("auto");
         SetListeners();
@@ -374,7 +374,7 @@ default
             list lParams = llParseString2List(sStr, ["="], []);
             string sToken = llList2String(lParams, 0);
             string sValue = llList2String(lParams, 1);
-			integer i = llSubStringIndex(sToken, "_");
+            integer i = llSubStringIndex(sToken, "_");
             if (sToken == "Global_prefix")
             {
                 if (sValue == "") sValue = "auto";
@@ -382,7 +382,7 @@ default
                 SetListeners();
             }
             else if (sToken == "Global_CType") CTYPE = sValue;
-			else if (llGetSubString(sToken, 0, i) == g_sScript)
+            else if (llGetSubString(sToken, 0, i) == g_sScript)
             {
                 sToken = llGetSubString(sToken, i + 1, -1);
                 if (sToken == "channel")

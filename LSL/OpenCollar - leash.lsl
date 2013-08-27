@@ -1,4 +1,4 @@
-//OpenCollar - leash
+﻿//OpenCollar - leash
 //leash script for the Open Collar Project (c)
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 
@@ -122,6 +122,7 @@ integer g_bLeashedToAvi;
 integer g_bFollowMode;
 string g_sScript;
 string CTYPE = "collar";
+
 list g_lLengths = ["1", "2", "3", "4", "5", "8","10" , "15", "20", "25", "30"];
 //list g_lPartPoints; // DoLeash function- priority given to last item in list. so if list is ["collar", "handle"], and we've heard from the handle and particles are going there, we'll ignore any responses from "collar"
 // integer iLoop;//testing how it works with it a golable
@@ -344,7 +345,7 @@ Follow(key kTarget, key kCmdGiver, integer iAuth)
     debug("Follow target=" + llList2CSV([kTarget, kCmdGiver, iAuth]));
     // can't leash wearer to self.
     if (kTarget == g_kWearer) return;
-    
+
     // Send notices to wearer, leasher, and target
     // Only send notices if Leasher is an AV, as objects normally handle their own messages for such things
     if (KeyIsAv(kCmdGiver)) 
@@ -626,11 +627,11 @@ integer UserCommand(integer iAuth, string sMessage, key kMessageID)
         }
         else if (sMesL == "givepost")
         {
-            llGiveInventory(kMessageID, "Grabby Post");
+            llGiveInventory(kMessageID, "OC_Leash_Post");
         }
         else if (sMesL == "rezpost")
         {
-            llRezObject("Grabby Post", llGetPos() + (<1.0, 0, 0.395> * llGetRot()), ZERO_VECTOR, llEuler2Rot(<0, 0, 0> * DEG_TO_RAD), 0);
+            llRezObject("OC_Leash_Post", llGetPos() + (<1.0, 0, 0.5> * llGetRot()), ZERO_VECTOR, llEuler2Rot(<0, 90, 0> * DEG_TO_RAD), 0);
         }
         else if (sMesL == "yank" && kMessageID == g_kLeashedTo)
         {
@@ -715,7 +716,7 @@ integer UserCommand(integer iAuth, string sMessage, key kMessageID)
         else if (sComm == "length")
         {
             float fNewLength = (float)sVal;
-			sVal = Float2String(fNewLength);
+            sVal = Float2String(fNewLength);
             if(fNewLength > 0.0)
             {
                 //Person holding the leash can always set length.
@@ -793,7 +794,7 @@ default
 {
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         //debug("statentry:"+(string)llGetFreeMemory( ));
         g_kWearer = llGetOwner();
         g_sWearer = llKey2Name(g_kWearer);

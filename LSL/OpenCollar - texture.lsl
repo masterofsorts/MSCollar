@@ -1,4 +1,4 @@
-//OpenCollar - texture
+﻿//OpenCollar - texture
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life. See "OpenCollar License" for details.
 //color
 
@@ -83,7 +83,7 @@ string GetDefaultTexture(string ele)
 integer GetIsLeashTex(string sInvName)
 {
     if (llGetSubString(sInvName, 0, 5) == "leash_") return TRUE;
-    if (sInvName == "chain" || sInvName == "rope" || sInvName == "!totallytransparent") return TRUE;
+    if (sInvName == "chain" || sInvName == "rope") return TRUE;
     return FALSE;
 }
 
@@ -204,7 +204,7 @@ TextureMenu(key kID, integer iPage, integer iAuth)
 
 ElementMenu(key kAv, integer iAuth)
 {
-    string sPrompt = "Pick which part of the " + CTYPE + " you would like to retexture.\n\nChoose *Touch* if you want to select the part by directly clicking on the collar.";
+    string sPrompt = "Pick which part of the " + CTYPE + " you would like to retexture.\n\nChoose *Touch* if you want to select the part by directly clicking on the " + CTYPE + ".";
     lButtons = llListSort(g_lElements, 1, TRUE);
     g_kElementID = Dialog(kAv, sPrompt, lButtons, ["*Touch*", UPMENU], 0, iAuth);
 }
@@ -234,6 +234,7 @@ SetElementTexture(string sElement, string sTex)
     integer n;
     integer iLinkCount = llGetNumberOfPrims();
     for (n = 2; n <= iLinkCount; n++)
+
     {
         string thiselement = ElementType(n);
         if (thiselement == sElement) llSetLinkTexture(n, sTex, ALL_SIDES);
@@ -263,7 +264,7 @@ default
     state_entry()
     {
         g_kWearer = llGetOwner();
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         //loop through non-root prims, build element list
         integer n;
         integer iLinkCount = llGetNumberOfPrims();
@@ -323,30 +324,32 @@ default
                 llResetScript();
             }
             else if (kID != g_kWearer && iNum != COMMAND_OWNER) return;
-            if (sStr == "settings") Notify(kID, "Texture Settings: " + DumpSettings("\n"), FALSE);
-            else if (g_iAppLock)
             {
-                Notify(kID, "The appearance of the " + CTYPE + " is locked. You cannot access this menu now!", FALSE);
-            }
-            else
-            {
-                list lParams = llParseString2List(sStr, [" "], []);
-                string sElement = llList2String(lParams, 1);
-                string sTex = llList2String(lParams, 2);
-                // subroutine to make chat entry of element non-case sensitive
-                string test;
-                integer l = 2;
-                for (; l <= llGetNumberOfPrims(); l++)
+                if (sStr == "settings") Notify(kID, "Texture Settings: " + DumpSettings("\n"), FALSE);
+                else if (g_iAppLock)
                 {
-                    test = ElementType(l);
-                    if (llToLower(test) == llToLower(sElement))
-                    {
-                        sElement = test;
-                        jump break;
-                    }
+                    Notify(kID, "The appearance of the " + CTYPE + " is locked. You cannot access this menu now!", FALSE);
                 }
-                @break;
-                SetElementTexture(sElement, sTex);
+                else
+                {
+                    list lParams = llParseString2List(sStr, [" "], []);
+                    string sElement = llList2String(lParams, 1);
+                    string sTex = llList2String(lParams, 2);
+                    // subroutine to make chat entry of element non-case sensitive
+                    string test;
+                    integer l = 2;
+                    for (; l <= llGetNumberOfPrims(); l++)
+                    {
+                        test = ElementType(l);
+                        if (llToLower(test) == llToLower(sElement))
+                        {
+                            sElement = test;
+                            jump break;
+                        }
+                    }
+                    @break;
+                    SetElementTexture(sElement, sTex);
+                }
             }
         }
         else if (iNum == LM_SETTING_RESPONSE)
@@ -354,7 +357,7 @@ default
             list lParams = llParseString2List(sStr, ["="], []);
             string sToken = llList2String(lParams, 0);
             string sValue = llList2String(lParams, 1);
-			integer i = llSubStringIndex(sToken, "_");
+            integer i = llSubStringIndex(sToken, "_");
             if (llGetSubString(sToken, 0, i) == g_sScript)
             {
                 sToken = llGetSubString(sToken, i + 1, -1);
@@ -362,8 +365,8 @@ default
                 if (~i) g_lTextureDefaults = llListReplaceList(g_lTextureDefaults, [sValue], i + 1, i + 1);
                 else g_lTextureDefaults += [sToken, sValue];
             }
-			else if (sToken == g_sAppLockToken) g_iAppLock = (integer)sValue;
-			else if (sToken == "Global_CType") CTYPE = sValue;
+            else if (sToken == g_sAppLockToken) g_iAppLock = (integer)sValue;
+            else if (sToken == "Global_CType") CTYPE = sValue;
         }
         else if (iNum == MENUNAME_REQUEST && sStr == g_sParentMenu)
         {
@@ -439,7 +442,6 @@ default
             }
         }
     }
-
     on_rez(integer iParam)
     {
         llResetScript();

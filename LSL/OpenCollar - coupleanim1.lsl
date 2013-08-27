@@ -1,4 +1,4 @@
-//OpenCollar - coupleanim1
+﻿//OpenCollar - coupleanim1
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 //coupleanim1
 string g_sParentMenu = "Animations";
@@ -278,7 +278,7 @@ default
 {
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_kWearer = llGetOwner();
         if (llGetInventoryType(CARD1) == INVENTORY_NOTECARD)
         {//card is present, start reading
@@ -559,14 +559,14 @@ state ready
                 else if ((integer)sMessage > 0 && ((string)((integer)sMessage) == sMessage))
                 {
                     g_fTimeOut = (float)((integer)sMessage);
-                    llMessageLinked(LINK_SET, LM_SETTING_SAVE, g_sScript + "timeout=" + (string)g_fTimeOut, NULL_KEY);
+                    llMessageLinked(LINK_SET, LM_SETTING_SAVE, g_sScript + "timeout=" + Float2String(g_fTimeOut), NULL_KEY);
                     Notify (kAv, "Couple Anmiations play now for " + (string)llRound(g_fTimeOut) + " seconds.",TRUE);
                     CoupleAnimMenu(kAv, iAuth);
                 }
                 else if (sMessage == "endless")
                 {
                     g_fTimeOut = 0.0;
-                    llMessageLinked(LINK_SET, LM_SETTING_SAVE, g_sScript + "timeout=" + (string)g_fTimeOut, NULL_KEY);
+                    llMessageLinked(LINK_SET, LM_SETTING_SAVE, g_sScript + "timeout=" + Float2String(g_fTimeOut), NULL_KEY);
                     Notify (kAv, "Couple Anmiations play now for ever. Use the menu or type *stopcouples to stop them again.",TRUE);
                 }
                 else

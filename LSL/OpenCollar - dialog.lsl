@@ -1,4 +1,4 @@
-//OpenCollar - dialog
+﻿//OpenCollar - dialog
 //an adaptation of Schmobag Hogfather's SchmoDialog script
 
 //MESSAGE MAP
@@ -136,6 +136,7 @@ Notify(key kID, string sMsg, integer iAlsoNotifyWearer)
         }
     }
 }
+
 
 integer ButtonDigits(list lIn)
 // checks if any of the times is over 20 characters and deduces how many digits are needed
@@ -361,7 +362,7 @@ default
 {
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_kWearer=llGetOwner();
     }
 

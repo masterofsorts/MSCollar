@@ -1,4 +1,4 @@
-//OpenCollar - anim
+﻿//OpenCollar - anim
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 
 //needs to handle anim requests from sister scripts as well
@@ -56,7 +56,6 @@ integer LM_SETTING_RESPONSE = 2002;//the httpdb script will send responses on th
 integer LM_SETTING_DELETE = 2003;//delete token from DB
 integer LM_SETTING_EMPTY = 2004;//sent by httpdb script when a token has no value in the db
 
-
 integer MENUNAME_REQUEST = 3000;
 integer MENUNAME_RESPONSE = 3001;
 integer MENUNAME_REMOVE = 3003;
@@ -79,7 +78,8 @@ integer g_iInterfaceChannel = -12587429;
 string AO_ON = "ZHAO_STANDON";
 string AO_OFF = "ZHAO_STANDOFF";
 string AO_MENU = "ZHAO_MENU";
-integer CTYPE = "collar";
+
+string CTYPE = "collar";
 
 key g_kWearer;
 string g_sScript;
@@ -214,6 +214,7 @@ StartAnim(string sAnim)
         if (llGetInventoryType(sAnim) == INVENTORY_ANIMATION)
         {   //get and stop currently playing anim
             if (llGetListLength(g_lAnims))
+
             {
                 string s_Current = llList2String(g_lAnims, 0);
                 llStopAnimation(s_Current);
@@ -497,7 +498,7 @@ default
     }
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_lAnimButtons = ["Pose", g_sTriggerAO, g_sGiveAO, "AO ON", "AO OFF"];
         g_kWearer = llGetOwner();
         g_iInterfaceChannel = (integer)("0x" + llGetSubString(g_kWearer,30,-1));
@@ -568,7 +569,7 @@ default
         { // saefword command recieved, release animation
             if(llGetInventoryType(g_sCurrentPose) == INVENTORY_ANIMATION)
             {
-				g_iLastRank = 0;
+                g_iLastRank = 0;
                 llMessageLinked(LINK_SET, ANIM_STOP, g_sCurrentPose, NULL_KEY);
                 g_iAnimLock = FALSE;
                 llMessageLinked(LINK_SET, LM_SETTING_DELETE, g_sScript + g_sLockToken, NULL_KEY);
@@ -581,7 +582,7 @@ default
             string sToken = llList2String(lParams, 0);
             string sValue = llList2String(lParams, 1);
             integer i = llSubStringIndex(sToken, "_");
-			if (llGetSubString(sToken, 0, i) == g_sScript)
+            if (llGetSubString(sToken, 0, i) == g_sScript)
             {
                 sToken = llGetSubString(sToken, i + 1, -1);
                 if (sToken == g_sAnimToken)
@@ -603,7 +604,7 @@ default
                     g_sAppEngine_Url = sValue;
                 }
             }
-			else if (sToken == "Global_CType") CTYPE = sValue;
+            else if (sToken == "Global_CType") CTYPE = sValue;
         }
         else if (iNum == DIALOG_RESPONSE)
         {

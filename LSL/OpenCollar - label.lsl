@@ -1,4 +1,4 @@
-//OpenCollar - label
+﻿//OpenCollar - label
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 string g_sParentMenu = "AddOns";
 string g_sSubMenu = "Label";
@@ -33,8 +33,6 @@ integer MENUNAME_RESPONSE = 3001;
 integer DIALOG = -9000;
 integer DIALOG_RESPONSE = -9001;
 integer DIALOG_TIMEOUT = -9002;
-
-
 
 integer g_iCharLimit = 12;
 
@@ -149,7 +147,7 @@ key Dialog(key kRCPT, string sPrompt, list lChoices, list lUtilityButtons, integ
 FontMenu(key kID, integer iAuth)
 {
     list lButtons=llList2ListStrided(g_lFonts,0,-1,2);
-    string sPrompt = "Select the font for the collar's label.  (Not all collars have a label that can use this feature.)";
+    string sPrompt = "Select the font for the " + CTYPE + "'s label.  (Not all collars have a label that can use this feature.)";
 
     g_kDialogID=Dialog(kID, sPrompt, lButtons, [UPMENU], 0, iAuth);
 }
@@ -309,7 +307,7 @@ SetOffsets(key font)
             }
             else if (t == PRIM_TYPE_CYLINDER)
             {
-                if (font == NULL_KEY) font = "2c1e3fa3-9bdb-2537-e50d-2deb6f2fa22c"; // Serif 2 default for cyl
+                if (font == NULL_KEY) font = "bf2b6c21-e3d7-877b-15dc-ad666b6c14fe"; // Serif default for cyl
                 g_vGridOffset = <-0.725, 0.425, 0.0>;
                 g_vRepeats = <1.434, 0.05, 0>;
                 g_vOffset = <0.037, 0.003, 0>;
@@ -333,7 +331,7 @@ default
 {
     state_entry()
     {   // Initialize the character index.
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_kWearer = llGetOwner();
         ResetCharIndex();
         SetOffsets(NULL_KEY);
@@ -397,7 +395,7 @@ default
             {
                 if (g_iAppLock)
                 {
-                    Notify(kID,"The appearance of the collar is locked. You cannot access this menu now!", FALSE);
+                    Notify(kID,"The appearance of the " + CTYPE + " is locked. You cannot access this menu now!", FALSE);
                 }
                 else FontMenu(kID, iNum);
             }
@@ -424,7 +422,7 @@ default
             string sToken = llList2String(lParams, 0);
             string sValue = llList2String(lParams, 1);
             integer i = llSubStringIndex(sToken, "_");
-			if (llGetSubString(sToken, 0, i) == g_sScript)
+            if (llGetSubString(sToken, 0, i) == g_sScript)
             {
                 sToken = llGetSubString(sToken, i + 1, -1);
                 if (sToken == "Text") g_sLabelText = sValue;
@@ -434,7 +432,7 @@ default
             {
                 g_iAppLock = (integer)sValue;
             }
-			else if (sToken == "Global_CType") CTYPE = sValue;
+            else if (sToken == "Global_CType") CTYPE = sValue;
             else if (sToken == "settings")
             {
                 if (sValue == "sent")

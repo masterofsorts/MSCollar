@@ -1,4 +1,4 @@
-//OpenCollar - hide
+﻿//OpenCollar - hide
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 //on getting menu request, give element menu
 //on getting element type, give Hide and Show buttons
@@ -85,8 +85,8 @@ key Dialog(key kRCPT, string sPrompt, list lChoices, list lUtilityButtons, integ
     llMessageLinked(LINK_SET, DIALOG, (string)kRCPT + "|" + sPrompt + "|" + (string)iPage + "|" 
     + llDumpList2String(lChoices, "`") + "|" + llDumpList2String(lUtilityButtons, "`") + "|" + (string)iAuth, kID);
     return kID;
-} 
-
+}
+ 
 string Float2String(float in)
 {
     string out = (string)in;
@@ -171,7 +171,7 @@ SaveAlphaSettings()
 
 ElementMenu(key kAv, integer iAuth)
 {
-    string sPrompt = "Pick which part of the " + CTYPE + " you would like to hide or show.\n\nChoose *Touch* if you want to select the part by directly clicking on the collar.";
+    string sPrompt = "Pick which part of the " + CTYPE + " you would like to hide or show.\n\nChoose *Touch* if you want to select the part by directly clicking on the " + CTYPE + ".";
     g_lButtons = [];
     //loop through elements, show appropriate buttons and prompts if hidden or shown
 
@@ -266,7 +266,7 @@ default
 {
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_kWearer = llGetOwner();
         BuildElementList();
         //register menu button
@@ -389,7 +389,7 @@ default
             {
                 g_iAppLock = (integer)sValue;
             }
-			else if (sToken == "Global_CType") CTYPE = sValue;
+            else if (sToken == "Global_CType") CTYPE = sValue;
         }
         else if (iNum == MENUNAME_REQUEST && sStr == g_sParentMenu)
         {

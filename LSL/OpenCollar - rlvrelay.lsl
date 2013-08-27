@@ -1,4 +1,4 @@
-//OpenCollar - rlvrelay
+﻿//OpenCollar - rlvrelay
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 
 integer RELAY_CHANNEL = -1812221819;
@@ -290,7 +290,7 @@ string HandleCommand(string sIdent, key kID, string sCom, integer iAuthed)
         string sAck = "ok";
         if (sCom == "!release" || sCom == "@clear") llMessageLinked(LINK_SET,RLV_CMD,"clear",kID);
         else if (sCom == "!version") sAck = "1100";
-        else if (sCom == "!implversion") sAck = "OpenCollar 3.7";
+        else if (sCom == "!implversion") sAck = "OpenCollar 3.8";
         else if (sCom == "!x-orgversions") sAck = "ORG=0003/who=001";
         else if (llGetSubString(sCom,0,6)=="!x-who/") {kWho = SanitizeKey(llGetSubString(sCom,7,42)); iGotWho=TRUE;}
         else if (llGetSubString(sCom,0,0) == "!") sAck = "ko"; // ko unknown meta-commands
@@ -399,6 +399,7 @@ Menu(key kID, integer iAuth)
     }
     lButtons+=["Access Lists", "MinMode", "Help"];
     sPrompt+="\n\nMake a choice:";
+
     g_kMenuID = Dialog(kID, sPrompt, lButtons, [UPMENU], 0, iAuth);
 }
 
@@ -579,7 +580,7 @@ CleanQueue()
     Dequeue();
 }
 
-// returns TRUE if it was a user command, FALSE if it is a LM�from another subsystem
+// returns TRUE if it was a user command, FALSE if it is a LM from another subsystem
 integer UserCommand(integer iNum, string sStr, key kID)
 {
     if (iNum<COMMAND_OWNER || iNum>COMMAND_WEARER) return FALSE;
@@ -603,6 +604,7 @@ integer UserCommand(integer iNum, string sStr, key kID)
     {
         g_kDebugRcpt = kID;
         Notify(kID, "Relay messages will be forwarded to "+llKey2Name(kID)+".", TRUE);
+
         return TRUE;
     }
     else if (sStr=="relay stopdebug")

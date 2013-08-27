@@ -62,7 +62,7 @@ Notify(key kID, string sMsg, integer iAlsoNotifyWearer)
     }
     else
     {
-        llInstantMessage(kID,sMsg);
+        llInstantMessage(kID, sMsg);
         if (iAlsoNotifyWearer)
         {
             llOwnerSay(sMsg);
@@ -75,7 +75,7 @@ list FindAvis(string in, list ex)
     list out = llGetAgentList(AGENT_LIST_REGION, []);
     string name;
     integer i = llGetListLength(out) - 1;
-    while(~i) // remove doubles
+    while(~i)
     {
         name = llKey2Name(llList2Key(out, i));
         if (llSubStringIndex(llToLower(name), llToLower(in)) == -1)
@@ -122,14 +122,14 @@ default
     }
     state_entry()
     {
-		g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
+        g_sScript = llStringTrim(llList2String(llParseString2List(llGetScriptName(), ["-"], []), 1), STRING_TRIM) + "_";
         g_kWearer = llGetOwner();
         AVIS = [];
     }
     link_message(integer link, integer num, string mess, key id)
     {
-		integer i;
-		list params = llParseString2List(mess, ["|"], []);
+        integer i;
+        list params = llParseString2List(mess, ["|"], []);
         if (num == DIALOG_RESPONSE && id == g_kMenuID)
         {
             key user = (key)llList2String(params, 0);
@@ -141,13 +141,12 @@ default
                 return;
             }
             else if (name == "No") return;
-            integer i = 0;
             for (; i < llGetListLength(AVIS); i++)
             {
                 key avi = llList2Key(AVIS, i);
                 if (avi == name)
                 {
-                    SendKey(auth, avi, user);
+                    SendResult(avi);
                     return;
                 }
             }
