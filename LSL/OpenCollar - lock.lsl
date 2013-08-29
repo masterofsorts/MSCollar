@@ -176,7 +176,7 @@ Lock()
     llMessageLinked(LINK_SET, LM_SETTING_SAVE, "Global_locked=1", NULL_KEY);
     llMessageLinked(LINK_SET, RLV_CMD, "detach=n", NULL_KEY);
     llMessageLinked(LINK_SET, MENUNAME_RESPONSE, g_sParentMenu + "|" + UNLOCK, NULL_KEY);
-    llPlaySound("abdb1eaa-6160-b056-96d8-94f548a14dda", 1.0);
+    llPlaySound("caa78697-8493-ead3-4737-76dcc926df30", 1.0);
     llMessageLinked(LINK_SET, MENUNAME_REMOVE, g_sParentMenu + "|" + LOCK, NULL_KEY);
     SetLockElementAlpha();//EB
 }
@@ -187,7 +187,7 @@ Unlock()
     llMessageLinked(LINK_SET, LM_SETTING_DELETE, "Global_locked", NULL_KEY);
     llMessageLinked(LINK_SET, RLV_CMD, "detach=y", NULL_KEY);
     llMessageLinked(LINK_SET, MENUNAME_RESPONSE, g_sParentMenu + "|" + LOCK, NULL_KEY);
-    llPlaySound("ee94315e-f69b-c753-629c-97bd865b7094", 1.0);
+    llPlaySound("ff09cab4-3358-326e-6426-ec8d3cd3b98e", 1.0);
     llMessageLinked(LINK_SET, MENUNAME_REMOVE, g_sParentMenu + "|" + UNLOCK, NULL_KEY);
     SetLockElementAlpha(); //EB
 }

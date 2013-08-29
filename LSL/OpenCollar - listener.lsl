@@ -40,7 +40,7 @@ integer MENUNAME_RESPONSE = 3001;
 integer EXT_COMMAND_COLLAR = 499;
 
 // new g_sSafeWord
-string g_sSafeWord = "SAFEWORD";
+string g_sSafeWord = "RED";
 
 //added for attachment auth
 integer g_iInterfaceChannel = -12587429; // AO
