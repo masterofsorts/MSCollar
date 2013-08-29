@@ -1,5 +1,5 @@
 ﻿// Template for creating a OpenCollar Plugin
-// API Version: 39
+// API Version: 3.9
 
 // Licensed under the GPLv2, with the additional requirement that these scripts
 // remain "full perms" in Second Life.  See "OpenCollar License" for details.

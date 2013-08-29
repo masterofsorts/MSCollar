@@ -43,7 +43,7 @@ integer EXT_COMMAND_COLLAR = 499;
 string g_sSafeWord = "RED";
 
 //added for attachment auth
-integer g_iInterfaceChannel = -12587429; // AO
+integer g_iInterfaceChannel = -12587429; // AO Backwards Compatibility
 integer g_iListenHandleAtt;
 
 integer ATTACHMENT_REQUEST = 600;

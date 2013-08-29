@@ -941,7 +941,15 @@ default
                 Notify(kOwner, "Your sub " + sSubName + " has used the safeword. Please check on " + sSubFirstName +"'s well-being and if further care is required.",FALSE);
             }
             llMessageLinked(LINK_THIS, INTERFACE_RESPONSE, "safeword", NULL_KEY);
+        }		
+	// JS: For backwards compatibility until all attachments/etc are rolled over to new interface
+        //added for attachment auth (Garvin)
+        else if (iNum == ATTACHMENT_REQUEST)
+        {
+          integer iAuth = Auth((string)kID, TRUE);
+          llMessageLinked(LINK_SET, ATTACHMENT_RESPONSE, (string)iAuth, kID);
         }
+    // JS: Remove ATTACHMENT_REQUEST & RESPONSE after all attachments have been updated properly
         else if (iNum == INTERFACE_REQUEST)
         {
             list lParams = llParseString2List(sStr, ["|"], []);
