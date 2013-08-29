@@ -76,7 +76,7 @@ key appengine_delivery_request;
 // static file on Github to keep server load down.  This script will remember
 // the date of the last time it reported news so it will only show things once.
 // It will also not show things more than a week old.
-string news_url = "https://raw.github.com/opencollar/OpenCollarUpdater/beta/news.md";
+string news_url = "https://raw.github.com/OpenCollar/OpenCollarUpdater/evolution/news.md";
 key news_request;
 
 // store versions as strings and don't cast to float until the last minute.
@@ -331,7 +331,7 @@ default
 
                 if (SecondStringBigger(last_news_time, this_news_time))
                 {
-                    string news = "OPENCOLLAR NEWS\n" + body;
+                    string news = "Newsflash " + body;
                     Notify(llGetOwner(), news, FALSE);
                     // last news time is remembered in memory.  We used to
                     // store it in the desc but you can't write to that while
