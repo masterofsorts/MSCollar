@@ -2,9 +2,9 @@
 //Licensed under the GPLv2, with the additional requirement that these scripts remain "full perms" in Second Life.  See "OpenCollar License" for details.
 //if list isn't blank, open listener on channel 0, with sub's key <== only for the first badword???
 
-string g_sBadWordAnim = "shock";
+string g_sBadWordAnim = "~shock";
 list g_lBadWords;
-string g_sPenance = "pet is very sorry for her mistake";
+string g_sPenance = "I didn't do it!";
 integer g_iListener;
 
 //MESSAGE MAP

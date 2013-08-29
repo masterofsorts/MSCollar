@@ -83,7 +83,7 @@ string GetDefaultTexture(string ele)
 integer GetIsLeashTex(string sInvName)
 {
     if (llGetSubString(sInvName, 0, 5) == "leash_") return TRUE;
-    if (sInvName == "chain" || sInvName == "rope") return TRUE;
+    if (sInvName == "chain" || sInvName == "rope" || sInvName == "!totallytransparent") return TRUE;
     return FALSE;
 }
 
