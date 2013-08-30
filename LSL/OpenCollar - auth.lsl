@@ -10,7 +10,7 @@ list g_lSecOwners;//strided list in the form key,name
 list g_lBlackList;//list of blacklisted UUID
 string g_sTmpName; //used temporarily to store new owner or secowner name while retrieving key
 
-string  g_sWikiURL = "http://code.google.com/p/opencollar/wiki/UserDocumentation";
+string  g_sWikiURL = "http://www.opencollar.at/user-guide.html";
 string g_sParentMenu = "Main";
 string g_sSubMenu = "Owners";
 
