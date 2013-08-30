@@ -70,6 +70,10 @@ integer DIALOG_TIMEOUT = -9002;
 
 integer FIND_AGENT = -9005;
 
+//added for attachment auth (garvin)
+integer ATTACHMENT_REQUEST = 600;
+integer ATTACHMENT_RESPONSE = 601;
+//new evolution style to handle attachment auth
 integer INTERFACE_REQUEST  = -9006;
 integer INTERFACE_RESPONSE = -9007;
 
@@ -941,8 +945,8 @@ default
                 Notify(kOwner, "Your sub " + sSubName + " has used the safeword. Please check on " + sSubFirstName +"'s well-being and if further care is required.",FALSE);
             }
             llMessageLinked(LINK_THIS, INTERFACE_RESPONSE, "safeword", NULL_KEY);
-        }		
-	// JS: For backwards compatibility until all attachments/etc are rolled over to new interface
+        }        
+    // JS: For backwards compatibility until all attachments/etc are rolled over to new interface
         //added for attachment auth (Garvin)
         else if (iNum == ATTACHMENT_REQUEST)
         {
