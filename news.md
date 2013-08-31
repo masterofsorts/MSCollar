@@ -1,6 +1,6 @@
 Issue: 20130830.1
 
-3.913 (Evolution)
+3.914 (Evolution)
 
 ATTENTION: The update you installed moved your collar to the final evolution version for Q3 2013. Should you decide to keep your collar on this channel you will receive beta updaters in the future. If you just want to use your collar to have fun, please use a red updater right away. We are sorry for the inconvenience and extra-effort for your updating process in case you installed this version by mistake.
 
