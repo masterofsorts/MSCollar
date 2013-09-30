@@ -1,13 +1,13 @@
-Issue: 20130927.1
+Issue: 20130930.2
 
-OpenCollar Dev/Beta/RC 3.931 HOTFIX
+OpenCollar 3.932
 
-3.930 will have a parallel release on the main channel. It is strongly advised to use a red updater unless you want to get involved on the development side of things. The gap in between main and beta channels has been closed.
+FIXED ISSUES: #23, #25, #27, #28 and #30
+https://github.com/OpenCollar/OpenCollarUpdater/issues
 
-IMPORTANT: What we are working on here will be the final version of the OpenCollar as we know it. Those who will want to participate for 4.0.0 will have to be familiar with the old system and you all have now one more time the chance to take a look at it from the inside out together with us.
+If you missed the auto-update, you can get an updater if navigating to Help/Debug in your collar menu and clicking Get Updater. Updaters are also available at the official locations at Keraxic and Qandico, as well as from the many network vendors found across the grid and on the marketplace.
 
-Contributors (3.9 Run): Corwin Davidson, Edgar Yven, IsA Daysleeper, Joy Stipe, Kire Faulkes, LoveMeNow2012, Marissa Mistwallow, Medea Destiny, Mickey Drayman, Nori Ovis, North Glenwalker, Rebbie, Romka Swallowtail, Tuco Solo, Wendy Starfall and xx Reyes
+IMPORTANT: This update migrates the beta channel to the main channel. If you are receiving this on the beta channel you will need this update now or at a later point to receive future updates!
 
-http://www.opencollar.at/
-http://www.opencollar.at/forum.html#!/tinkerbox
-https://github.com/OpenCollar/OpenCollarUpdater
+Changelog & Details:
+http://www.opencollar.at/blog.html
